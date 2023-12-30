@@ -26,7 +26,7 @@ class Body:
         self.acc = Vector2D(0, 0)
  
     #Return all available information, Cart = cartesian mode, Polar = polar mode
-    def __str__(self, mode = "Short"):
+    def __str__(self):
         return f"Il corpo {self.name}\n"\
             + f"Si trova nelle coordinate cartesiane ({self.pos.x:.3g}m, {self.pos.y:.3g}m).\n"\
             + f"Si muove con velocità cartesiane     ({self.vel.x:.3g}m/s, {self.vel.y:.3g}m/s).\n"\

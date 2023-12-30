@@ -45,7 +45,7 @@ def calcAccAllObj(*all_objs : Tuple[Body]) -> None:
 def main():
     from utility.bodies import Bodies
     
-    test_accuracy(Bodies[:6])
+    test_accuracy(*Bodies[:6])
     
     return None
 
