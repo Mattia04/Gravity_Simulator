@@ -17,14 +17,3 @@ smth
 
 # BodyClass
 smth
-
-# Problems
-## 1
-The opening of the file Settings.json seems to be off when running Simulation.py in different directories.
-
-## 2
-from ... import ... seems to be working only if running Simulation.py
-if used by single modules it won't work.
-
-## 3
-The variables and function names don't respect PEP8.
