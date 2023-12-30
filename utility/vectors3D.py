@@ -1,7 +1,7 @@
 from typing import Tuple
 import math
 import numpy as np
-from .vectors2D import Vector2D
+from vectors2D import Vector2D
 
 # Definition of the class Vector3D
 class Vector3D:
