@@ -47,7 +47,7 @@ class Vector2D:
     #NOTE matmul @ è usato come simbolo di prodotto vettoriale non come prodotto di matrici
     #NOTE in 2D crea in warning perché non si può definire un vettore in una terza dimensione perché non esiste, return il modulo di tale vettore
     def __matmul__(self, other : object) -> float:
-        warnings.warn("Warning: you are tring to get the vector product in 2D, since it's defined only in 3D the module of the vector was returned insted of the vector.\n")
+        warnings.warn("Warning: you are trying to get the vector product in 2D, since it's defined only in 3D the module of the vector was returned instead of the vector.\n")
         return self.x*other.y - other.x*self.y
     
     def __truediv__(self, other : int|float) -> object:
@@ -73,7 +73,7 @@ class Vector2D:
         return self.x, self.y
     
     #Return the polar position as a tuple
-    def get_polr_coord(self) -> Tuple[float]:
+    def get_polar_coord(self) -> Tuple[float]:
         return self.mod(), self.angle()
     
     #Modulo
