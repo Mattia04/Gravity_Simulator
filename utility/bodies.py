@@ -4,13 +4,13 @@ from typing import Tuple
 from .bodyclass import Body
 from .mycostants import Constants as const
 
-def createPosition(mod : float, vmod : float, angle : float) -> Tuple[float]:
+def createPosition(mod : float, v_mod : float, angle : float) -> Tuple[float]:
     x = mod * cos(angle)
     y = mod * sin(angle)
-    
-    vx = vmod * cos(angle + pi/2)
-    vy = vmod * sin(angle + pi/2)
-    
+
+    vx = v_mod * cos(angle + pi/2)
+    vy = v_mod * sin(angle + pi/2)
+
     return x, y, vx, vy
 
 body1 : Body = Body("Sole",    const.SUN_M,     *createPosition(0, 0, 0))

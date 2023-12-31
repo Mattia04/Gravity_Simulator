@@ -27,18 +27,18 @@ class Constants:
     URANUS_D = 2867.0e9
     NEPTUNE_D = 4515.0e9
     PLUTO_D = 5906.4e9
-
     #Distance from Earth (in m)
     MOON_D = 0.384e9
 
-    #Orbital velocity
+    #Orbital velocity around the sun (in m/s)
     MERCURY_V = 47.4e3
     VENUS_V = 35.0e3
     EARTH_V = 29.8e3
-    MOON_V = 1.0e3
     MARS_V = 24.1e3
     JUPITER_V = 13.1e3
     SATURN_V = 9.7e3
     URANUS_V = 6.8e3
     NEPTUNE_V = 5.4e3
     PLUTO_V = 4.7e3
+    #Orbital velocity around the Earth (in m/s)
+    MOON_V = 1.0e3
