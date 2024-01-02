@@ -9,23 +9,37 @@ with open(path.abspath("Settings.json"), "r") as f:
     config = json.load(f)
 dt = config["dt"]
 
-# TODO write docstring
 class Body:
+    """Body class stores the information of a celestial body and has the modules
+    for the first order Euler's method for computing a physical system
+    """
     def __init__(self, name : str, mass: float,
                  x_pos: float, y_pos: float,
                  x_vel: float, y_vel: float
                  ) -> None:
+        """Initialize the Body
 
-        self.name = name # Name of the Body
-        self.mass = mass # Mass of the Body
+        Args:
+            name (str): Name of the body
+            mass (float): Mass of the Body
+            x_pos (float): x coordinate of the position vector
+            y_pos (float): y coordinate of the position vector
+            x_vel (float): x coordinate of the velocity vector
+            y_vel (float): y coordinate of the velocity vector
+        """
+
+        self.name = name
+        self.mass = mass
 
         self.pos = Vector2D(x_pos, y_pos) # Position vector
         self.vel = Vector2D(x_vel, y_vel) # Velocity vector
-        # For now it's initialized at zero, because it will be calculated later
+        # ! For now it's initialized at zero, because it will be calculated later:
         self.acc = Vector2D(0, 0) # Acceleration vector
 
-    # Returns the available information in cartesian coordinates
     def __str__(self) -> str:
+        """Returns:
+            str: Description of the object in cartesian coordinates with
+        """
         return f"The body {self.name}:\n"\
             + "\tCartesian position is     "\
                 + f"({self.pos.x:.3g}m,     {self.pos.y:.3g}m).\n"\
@@ -39,8 +53,15 @@ class Body:
         return f"{self.name}, {self.pos.mod():.5g}, \
             {self.vel.mod():.5g}, {self.acc.mod():.5g}"
 
-    #Set equivalence by name
+    # ! note that == and < are not referring to the same thing
+    # ! this is why I didn't add the other operations
     def __eq__(self, other: object) -> bool:
+        """Args:
+            other (object): another body
+
+        Returns:
+            bool: if the objects have the same name
+        """
         if self.name == other.name:
             return True
         return False
@@ -48,21 +69,35 @@ class Body:
     # ! note that == and < are not referring to the same thing
     # ! this is why I didn't add the other operations
     def __lt__(self, other: object) -> bool:
-        if self.pos.mod() == other.pos.mod():
+        """Args:
+            other (object): another body
+
+        Returns:
+            bool: of the module of self is less of the module of other
+        """
+        if self.pos.mod() < other.pos.mod():
             return True
         return False
 
-    # Move the object
-    # * Using the first order Euler Method
     def move(self) -> None:
+        """Adds the first order approximation (velocity*time_delta) to
+            the current position
+        """
         self.pos += self.vel * dt
 
-    #Change the velocity
     def accelerate(self) -> None:
+        """Adds the first order approximation (acceleration*time_delta) to
+            the current velocity
+        """
         self.vel += self.acc * dt
 
-    #Set the acceleration from external input
     def set_acceleration(self, other : Vector2D) -> None:
+        """Set the current acceleration from external input and calculates the
+            new velocity and position
+
+        Args:
+            other (Vector2D): The vector that describes the current acceleration
+        """
         self.acc = other
         self.accelerate()
         self.move()
