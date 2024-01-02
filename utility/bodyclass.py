@@ -10,6 +10,7 @@ with open(path.abspath("Settings.json"), "r") as f:
 dt = config["dt"]
 
 # TODO write docstring
+# TODO change function names to be in line with PEP8
 class Body:
     def __init__(self, name : str, mass: float,
                  x_pos: float, y_pos: float,
@@ -24,16 +25,20 @@ class Body:
         # For now it's initialized at zero, because it will be calculated later
         self.acc = Vector2D(0, 0) # Acceleration vector
 
-    # TODO write in english
+    # Returns the available information in cartesian coordinates
     def __str__(self) -> str:
-        return f"Il corpo {self.name}\n"\
-            + f"Si trova nelle coordinate cartesiane ({self.pos.x:.3g}m, {self.pos.y:.3g}m).\n"\
-            + f"Si muove con velocità cartesiane     ({self.vel.x:.3g}m/s, {self.vel.y:.3g}m/s).\n"\
-            + f"Con accelerazione di                 ({self.acc.x:.3g}m/s^2, {self.acc.y:.3g}m/s^2)"
+        return f"The body {self.name}:\n"\
+            + "\tCartesian position is     "\
+                + f"({self.pos.x:.3g}m,     {self.pos.y:.3g}m).\n"\
+            + "\tCartesian velocity is     "\
+                + f"({self.vel.x:.3g}m/s,   {self.vel.y:.3g}m/s).\n"\
+            + "\tCartesian acceleration is "\
+                + f"({self.acc.x:.3g}m/s^2, {self.acc.y:.3g}m/s^2)"
 
     #Return all available information in a str[tuple]
     def __repr__(self) -> str:
-        return f"{self.name}, {self.pos.mod():.5g}, {self.vel.mod():.5g}, {self.acc.mod():.5g}"
+        return f"{self.name}, {self.pos.mod():.5g}, \
+            {self.vel.mod():.5g}, {self.acc.mod():.5g}"
 
     #Set equivalence by name
     def __eq__(self, other: object) -> bool:
@@ -58,7 +63,7 @@ class Body:
         self.vel += self.acc * dt
 
     #Set the acceleration from external input
-    def setAcceleration(self, other : Vector2D) -> None:
+    def set_acceleration(self, other : Vector2D) -> None:
         self.acc = other
         self.accelerate()
         self.move()
