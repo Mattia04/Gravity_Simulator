@@ -1,4 +1,4 @@
-#NOTE This file should be made better
+# TODO Add more constants and other parameters, also write it more precise
 
 class Constants:
     #Gravitational constant in Nm^2kg^-2

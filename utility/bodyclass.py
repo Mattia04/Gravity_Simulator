@@ -53,29 +53,14 @@ class Body:
         return f"{self.name}, {self.pos.mod():.5g}, \
             {self.vel.mod():.5g}, {self.acc.mod():.5g}"
 
-    # ! note that == and < are not referring to the same thing
-    # ! this is why I didn't add the other operations
     def __eq__(self, other: object) -> bool:
         """Args:
             other (object): another body
 
         Returns:
-            bool: if the objects have the same name
+            bool: true if the objects have the same name
         """
         if self.name == other.name:
-            return True
-        return False
-
-    # ! note that == and < are not referring to the same thing
-    # ! this is why I didn't add the other operations
-    def __lt__(self, other: object) -> bool:
-        """Args:
-            other (object): another body
-
-        Returns:
-            bool: of the module of self is less of the module of other
-        """
-        if self.pos.mod() < other.pos.mod():
             return True
         return False
 
