@@ -10,7 +10,6 @@ with open(path.abspath("Settings.json"), "r") as f:
 dt = config["dt"]
 
 # TODO write docstring
-# TODO change function names to be in line with PEP8
 class Body:
     def __init__(self, name : str, mass: float,
                  x_pos: float, y_pos: float,

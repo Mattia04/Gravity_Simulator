@@ -6,7 +6,6 @@ from .mycostants import Constants as const
 
 def create_position(mod : float, v_mod : float, angle : float, v_angle : float) -> Tuple[float]:
     """Generate the position and velocity of a vector
-        NOTE the velocity and position are set perpendicular by default
 
     Args:
         mod (float): Module of the position vector
@@ -29,14 +28,24 @@ def create_position(mod : float, v_mod : float, angle : float, v_angle : float) 
 
     return x, y, vx, vy
 
-def get_perpendicular(angle : float, positive : bool = True):
+def get_perpendicular(angle : float, positive : bool = True) -> float:
+    """Get the angle perpendicular
+
+    Args:
+        angle (float): the angle to set perpendicular to
+        positive (bool, optional): whether the angle should be positive
+            or negative. Defaults to True.
+
+    Returns:
+        float: the perpendicular to @angle (positive or negative)
+    """
     if positive:
         return angle + pi/2
-    else:
-        return angle - pi/2
+    return angle - pi/2
 
-"""
-You can generate the body with:
+"""Here you can find default bodies
+
+You can generate new bodies with:
 Body(
     name (str): the name of the body
     mass (float): the mass of the body
@@ -57,4 +66,5 @@ body7 : Body = Body("Saturno", const.SATURN_M,  *create_position(const.SATURN_D,
 body8 : Body = Body("Urano",   const.URANUS_M,  *create_position(const.URANUS_D,  const.URANUS_V,   0.8,    get_perpendicular(0.8)))
 body9 : Body = Body("Nettuno", const.NEPTUNE_M, *create_position(const.NEPTUNE_D, const.NEPTUNE_V,  6.1,    get_perpendicular(6.1)))
 
+# * Get the list of Bodies, you can also use other lists
 Bodies : Tuple[Body] = (body1, body2, body3, body4, body5, body6, body7, body8, body9)
