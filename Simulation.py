@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 
 from utility import Vector2D, const, Body
 
-from pprint import pprint
+import manim
 
 # ! The program is not slow, but it's neither fast.
 # ! A big improvement can still be made
@@ -125,7 +125,12 @@ def test_accuracy(*Bodies : Tuple[Body], interval : int = 100, iters : int = 100
     ax.legend()
     plt.show()
 
-
+#manim -pql scene.py Animation
+class Animation(manim.Scene):
+    def construct(self):
+        circle = manim.Circle()  # create a circle
+        circle.set_fill(manim.RED_A, opacity=0.5)  # set the color and transparency
+        self.play(manim.Create(circle))  # show the circle on screen
 
 if __name__ == "__main__":
     main()
