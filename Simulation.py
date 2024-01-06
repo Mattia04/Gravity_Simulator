@@ -2,13 +2,12 @@
 import math
 from typing import Tuple
 from functools import partial, reduce
+from threading import Thread
 
 import numpy as np
 import matplotlib.pyplot as plt
 
-from utility import Vector2D, const, Body
-
-from pprint import pprint
+from utility import Vector2D, const, Body, timer_func
 
 # ! The program is not slow, but it's neither fast.
 # ! A big improvement can still be made
@@ -35,18 +34,25 @@ def add_object_field(sum : Vector2D, oth_obj : Body, obj : Body) -> Vector2D:
     return sum + Vector2D(mod_accel * math.cos(theta), mod_accel * math.sin(theta))
 
 # Calculate the effect of the all oth_objs on the singular obj
-def calculate_object_acceleration(obj : Body, oth_objs : Tuple[Body]) -> Vector2D:
+def calculate_object_acceleration(obj : Body, oth_objs : Tuple[Body], acc : Vector2D) -> Vector2D:
     # * setting add_object_field on to obj
     func_add = partial(add_object_field, obj=obj)
-    return reduce(func_add, oth_objs, Vector2D(0, 0))
+    acc = reduce(func_add, oth_objs, Vector2D(0, 0))
 
 # Calculate and set the effect of ALL objects on each other
 def calculate_objects_accelerations(*all_objs : Tuple[Body]) -> None:
     # Calculate the accelerations of each object
-    accelerations = [Vector2D(0, 0) for i in all_objs]
+    # ! I'm adding multithreading
+    accelerations = [Vector2D(0, 0) for _ in all_objs]
+    threads = [None for _ in all_objs]
     for i, obj in enumerate(all_objs):
         oth_objs = [oth_obj for oth_obj in all_objs if oth_obj != obj]
-        accelerations[i] = calculate_object_acceleration(obj, oth_objs)
+        threads[i] = Thread(target=calculate_object_acceleration,
+                            args=(obj, oth_objs, accelerations[i]))
+        threads[i].start()
+
+    for thread in threads:
+        thread.join()
 
     for obj, acc in zip(all_objs, accelerations):
         obj.set_acceleration(acc)
@@ -66,7 +72,7 @@ def main():
     return None
 
 
-
+@timer_func
 def test_accuracy(*Bodies : Tuple[Body], interval : int = 100, iters : int = 1000) -> None:
     """Calculate and plot the distance from the Sun(first body),
         to the n-th body, over a period of time.
