@@ -6,7 +6,7 @@ from functools import partial, reduce
 import numpy as np
 import matplotlib.pyplot as plt
 
-from utility import Vector2D, const, Body
+from utility import Vector2D, const, Body, timer_func
 
 from pprint import pprint
 
@@ -64,7 +64,6 @@ def main():
     test_accuracy(*Bodies[:4])
 
     return None
-
 
 
 def test_accuracy(*Bodies : Tuple[Body], interval : int = 100, iters : int = 1000) -> None:
