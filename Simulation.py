@@ -2,7 +2,7 @@
 import math
 from typing import Tuple
 from functools import partial, reduce
-from threading import Thread
+from multiprocessing import Pool
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -34,28 +34,26 @@ def add_object_field(sum : Vector2D, oth_obj : Body, obj : Body) -> Vector2D:
     return sum + Vector2D(mod_accel * math.cos(theta), mod_accel * math.sin(theta))
 
 # Calculate the effect of the all oth_objs on the singular obj
-def calculate_object_acceleration(obj : Body, oth_objs : Tuple[Body], acc : Vector2D) -> Vector2D:
+def calculate_object_acceleration(args : Tuple[Body, Tuple[Body]]) -> Vector2D:
+    obj, oth_objs = args
     # * setting add_object_field on to obj
     func_add = partial(add_object_field, obj=obj)
-    acc = reduce(func_add, oth_objs, Vector2D(0, 0))
+    return reduce(func_add, oth_objs, Vector2D(0, 0))
 
 # Calculate and set the effect of ALL objects on each other
 def calculate_objects_accelerations(*all_objs : Tuple[Body]) -> None:
     # Calculate the accelerations of each object
     # ! I'm adding multithreading
-    accelerations = [Vector2D(0, 0) for _ in all_objs]
-    threads = [None for _ in all_objs]
+    # ! Non va un cazzo
+    args = [None for _ in all_objs]
     for i, obj in enumerate(all_objs):
         oth_objs = [oth_obj for oth_obj in all_objs if oth_obj != obj]
-        threads[i] = Thread(target=calculate_object_acceleration,
-                            args=(obj, oth_objs, accelerations[i]))
-        threads[i].start()
+        args[i] = (obj, oth_objs)
 
-    for thread in threads:
-        thread.join()
-
-    for obj, acc in zip(all_objs, accelerations):
+    res = pool.map(func=calculate_object_acceleration, iterable=args)
+    for obj, acc in zip(all_objs, res):
         obj.set_acceleration(acc)
+
 
 
 
@@ -66,6 +64,9 @@ def main():
         None
     """
     from utility.bodies import Bodies
+
+    global pool
+    pool = Pool(4)
 
     test_accuracy(*Bodies[:4])
 
