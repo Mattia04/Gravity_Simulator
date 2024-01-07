@@ -43,10 +43,11 @@ def calculate_object_acceleration(args : Tuple[Body, Tuple[Body]]) -> Vector2D:
 # Calculate and set the effect of ALL objects on each other
 def calculate_objects_accelerations(*all_objs : Tuple[Body]) -> None:
     # Calculate the accelerations of each object
-    # ! I'm adding multithreading
-    # ! Non va un cazzo
+    # ! I'm adding multithreading hoping in something better
     args = [None for _ in all_objs]
     for i, obj in enumerate(all_objs):
+        # ! I only need to pass obj.pos and oth_objs.pos, oth_objs.mass
+        # ! Not the whole object
         oth_objs = [oth_obj for oth_obj in all_objs if oth_obj != obj]
         args[i] = (obj, oth_objs)
 
