@@ -66,9 +66,9 @@ def main():
     from utility.bodies import Bodies
 
     global pool
-    pool = Pool(4)
+    pool = Pool(8)
 
-    test_accuracy(*Bodies[:4])
+    test_accuracy(*Bodies[:8])
 
     return None
 
