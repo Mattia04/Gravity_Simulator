@@ -8,6 +8,7 @@ class Vector2D:
         x: x coordinate of the cartesian plane
         y: y coordinate of the cartesian plane
 
+    # todo rewrite this docstring and change the errors's names
     Raises:
         Warning: When you try to get the vector product of two 2D vectors
             you can't have a vector result in the same plane, so the module of
@@ -48,6 +49,7 @@ class Vector2D:
             return True
         return False
 
+    # ? maybe deliting this is better
     def __lt__(self, other: object) -> bool:
         """Args:
             other (object): another body

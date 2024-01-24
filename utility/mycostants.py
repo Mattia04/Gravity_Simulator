@@ -1,4 +1,6 @@
 # TODO Add more constants and other parameters, also write it more precise
+# TODO rewrite this file with a dataset
+# @     maybe using pands dataset for each planet
 
 class Constants:
     #Gravitational constant in Nm^2kg^-2

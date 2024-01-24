@@ -56,6 +56,7 @@ Body(
 )
 or you can use Body(name, mass, create_position(mod, alpha, vel, beta))
 """
+# ? for the creation of bodies I could use a better method: I still have to think about it
 body1 : Body = Body("Sole",    const.SUN_M,     *create_position(0,               0,                0,      get_perpendicular(0)))
 body2 : Body = Body("Mercurio",const.MERCURY_M, *create_position(const.MERCURY_D, const.MERCURY_V,  0.1,    get_perpendicular(0.1)))
 body3 : Body = Body("Venere",  const.VENUS_M,   *create_position(const.VENUS_D,   const.VENUS_V,    3,      get_perpendicular(3)))

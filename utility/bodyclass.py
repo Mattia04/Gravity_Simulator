@@ -30,10 +30,12 @@ class Body:
 
         self.name = name
         self.mass = mass
+        # ? I could add the object radius for a merge implementation
 
         self.pos = Vector2D(x_pos, y_pos) # Position vector
         self.vel = Vector2D(x_vel, y_vel) # Velocity vector
         # ! For now it's initialized at zero, because it will be calculated later:
+        # ? It could be not needed
         self.acc = Vector2D(0, 0) # Acceleration vector
 
     def __str__(self) -> str:
@@ -69,13 +71,17 @@ class Body:
             the current position
         """
         self.pos += self.vel * dt
+        # ? i have to figure out why i can't use 1/2 * acc * dt^2
 
+    # ? to remove the self.acc I could pass here the acceleration vector
     def accelerate(self) -> None:
         """Adds the first order approximation (acceleration*time_delta) to
             the current velocity
         """
         self.vel += self.acc * dt
+        # ? and add self.move()
 
+    # ? and remove all this function
     def set_acceleration(self, other : Vector2D) -> None:
         """Set the current acceleration from external input and calculates the
             new velocity and position
