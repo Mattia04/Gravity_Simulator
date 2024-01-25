@@ -223,3 +223,7 @@ class Vector2D:
         alpha = self.angle()
         self.x = mod * math.cos(alpha + theta)
         self.y = mod * math.sin(alpha + theta)
+
+
+def Vec2D_from_polar(module : float, theta : float) -> Vector2D:
+    return Vector2D(module * math.cos(theta), module * math.sin(theta))

@@ -34,9 +34,6 @@ class Body:
 
         self.pos = Vector2D(x_pos, y_pos) # Position vector
         self.vel = Vector2D(x_vel, y_vel) # Velocity vector
-        # ! For now it's initialized at zero, because it will be calculated later:
-        # ? It could be not needed
-        self.acc = Vector2D(0, 0) # Acceleration vector
 
     def __str__(self) -> str:
         """Returns:
@@ -46,14 +43,11 @@ class Body:
             + "\tCartesian position is     "\
                 + f"({self.pos.x:.3g}m,     {self.pos.y:.3g}m).\n"\
             + "\tCartesian velocity is     "\
-                + f"({self.vel.x:.3g}m/s,   {self.vel.y:.3g}m/s).\n"\
-            + "\tCartesian acceleration is "\
-                + f"({self.acc.x:.3g}m/s^2, {self.acc.y:.3g}m/s^2)"
+                + f"({self.vel.x:.3g}m/s,   {self.vel.y:.3g}m/s).\n"
 
     #Return all available information in a str[tuple]
     def __repr__(self) -> str:
-        return f"{self.name}, {self.pos.mod():.5g}, \
-            {self.vel.mod():.5g}, {self.acc.mod():.5g}"
+        return f"{self.name}, {self.pos.mod():.5g}, {self.vel.mod():.5g}"
 
     def __eq__(self, other: object) -> bool:
         """Args:
@@ -66,29 +60,10 @@ class Body:
             return True
         return False
 
+    # TODO put this function as "private" to not be called externally
     def move(self) -> None:
-        """Adds the first order approximation (velocity*time_delta) to
-            the current position
-        """
         self.pos += self.vel * dt
-        # ? i have to figure out why i can't use 1/2 * acc * dt^2
 
-    # ? to remove the self.acc I could pass here the acceleration vector
-    def accelerate(self) -> None:
-        """Adds the first order approximation (acceleration*time_delta) to
-            the current velocity
-        """
-        self.vel += self.acc * dt
-        # ? and add self.move()
-
-    # ? and remove all this function
-    def set_acceleration(self, other : Vector2D) -> None:
-        """Set the current acceleration from external input and calculates the
-            new velocity and position
-
-        Args:
-            other (Vector2D): The vector that describes the current acceleration
-        """
-        self.acc = other
-        self.accelerate()
+    def accelerate(self, acceleration : Vector2D) -> None:
+        self.vel += acceleration * dt
         self.move()
