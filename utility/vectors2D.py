@@ -49,17 +49,17 @@ class Vector2D:
             return True
         return False
 
-    # ? maybe deliting this is better
-    def __lt__(self, other: object) -> bool:
-        """Args:
-            other (object): another body
+    # # ? maybe deliting this is better
+    # def __lt__(self, other: object) -> bool:
+    #     """Args:
+    #         other (object): another body
 
-        Returns:
-            bool: true if the module of self is less of the module of other
-        """
-        if self.mod() < other.mod():
-            return True
-        return False
+    #     Returns:
+    #         bool: true if the module of self is less of the module of other
+    #     """
+    #     if self.mod() < other.mod():
+    #         return True
+    #     return False
 
     def __add__(self, other : object) -> object:
         """Definition of additions of vectors

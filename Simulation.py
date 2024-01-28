@@ -9,6 +9,8 @@ from tqdm import tqdm
 
 from utility import *
 
+# TODO update readme file
+
 # ! The program is not slow, but it's neither fast.
 # ! A big improvement can still be made
 # @ Ideas to make it faster:
@@ -18,6 +20,13 @@ from utility import *
 # @     use a different method (I don't want to do it now)
 # @     try to get a real parallel computation of the accelerations
 # @         but I don't think the calculations of this are the main slow-down
+# ! after profiling the code I figured out that the biggest slow down is the Vector2D calass
+# @ So try making it in c++
+# ! another slow down are the functions:
+# @     calc_gravitational_acceleration
+# @     calc_distance
+# ! also try to see if not using the reduce function is better
+
 
 # ! The creation of new bodies is boring and tedious
 

@@ -31,6 +31,7 @@ class Body:
         self.name = name
         self.mass = mass
         # ? I could add the object radius for a merge implementation
+        # ? I could add a type variable that indicates the type of stellar object it is
 
         self.pos = Vector2D(x_pos, y_pos) # Position vector
         self.vel = Vector2D(x_vel, y_vel) # Velocity vector
@@ -45,25 +46,34 @@ class Body:
             + "\tCartesian velocity is     "\
                 + f"({self.vel.x:.3g}m/s,   {self.vel.y:.3g}m/s).\n"
 
-    #Return all available information in a str[tuple]
     def __repr__(self) -> str:
         return f"{self.name}, {self.pos.mod():.5g}, {self.vel.mod():.5g}"
 
     def __eq__(self, other: object) -> bool:
-        """Args:
-            other (object): another body
+        """
+        Parameters
+        ----------
+        other : object
+            another body
 
-        Returns:
-            bool: true if the objects have the same name
+        Returns
+        -------
+        bool
+            True if self and other have the same name
         """
         if self.name == other.name:
             return True
         return False
 
-    # TODO put this function as "private" to not be called externally
-    def move(self) -> None:
-        self.pos += self.vel * dt
-
     def accelerate(self, acceleration : Vector2D) -> None:
+        """accelerate and move the body
+
+        It uses second order euler's method to calculate an iteration
+
+        Parameters
+        ----------
+        acceleration : Vector2D
+            The current acceleration vector
+        """
         self.vel += acceleration * dt
-        self.move()
+        self.pos += self.vel * dt
