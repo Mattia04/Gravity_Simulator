@@ -1,7 +1,7 @@
 # Gravity Simulator
 
 ## Introduction
-As a physics student I liked the idea of doing a gravity simulation and diced to begin this project as a way to learn-by-doing. I still have a lot to do in this project and still lot to learn.
+As a physics student I liked the idea of doing a gravity simulation and decided to begin this project as a way to learn-by-doing. I still have a lot to do in this project and still lot to learn.
 
 Feel free to give me comments or suggestions to improve my code.
 

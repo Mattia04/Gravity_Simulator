@@ -4,11 +4,11 @@ import warnings
 
 class Vector2D:
     """__Vector2D__
+    ---------
     Contains:
         x: x coordinate of the cartesian plane
         y: y coordinate of the cartesian plane
-
-    # todo rewrite this docstring and change the errors's names
+    ---------
     Raises:
         Warning: When you try to get the vector product of two 2D vectors
             you can't have a vector result in the same plane, so the module of
@@ -37,11 +37,10 @@ class Vector2D:
     def __repr__(self) -> str:
         return f"{self.x} {self.y}"
 
-    # ! __eq__ and __lt__ have different meanings
     def __eq__(self, other : object) -> bool:
         """Args:
             other (object): another Vector2D
-
+        --------
         Returns:
             bool: true if other vector is the same as self vector
         """
@@ -49,24 +48,12 @@ class Vector2D:
             return True
         return False
 
-    # # ? maybe deliting this is better
-    # def __lt__(self, other: object) -> bool:
-    #     """Args:
-    #         other (object): another body
-
-    #     Returns:
-    #         bool: true if the module of self is less of the module of other
-    #     """
-    #     if self.mod() < other.mod():
-    #         return True
-    #     return False
-
     def __add__(self, other : object) -> object:
         """Definition of additions of vectors
-
+        -----
         Args:
             other (object): another Vector2d
-
+        --------
         Returns:
             object: the sum of self and other as a Vector2D
         """
@@ -74,7 +61,7 @@ class Vector2D:
 
     def __neg__(self) -> object:
         """Definition of the negative of a vector
-
+        --------
         Returns:
             object: the opposite of the self vector
         """
@@ -82,10 +69,10 @@ class Vector2D:
 
     def __sub__(self, other : object) -> object:
         """Definition of subtraction of vectors
-
+        -----
         Args:
             other (object): another Vector2d
-
+        --------
         Returns:
             object: the difference of self and other as a Vector2D
         """
@@ -93,15 +80,15 @@ class Vector2D:
 
     def __mul__(self, other : int|float|object) -> float|object:
         """Definition of right multiplications self * other
-
+        -----
         Args:
             other (object): another Vector2d
             other (int|float): number value
-
+        -------
         Raises:
             Exception: Multiplication types unsupported if other is not
                 int|float|object
-
+        --------
         Returns:
             if other is int|float:
                 object: the product of a vector times a scalar
@@ -117,14 +104,14 @@ class Vector2D:
 
     def __rmul__(self, other : int|float) -> object:
         """Definition of the right multiplication other * self
-
+        -----
         Args:
             other (int | float): number value
-
+        -------
         Raises:
             Exception: Multiplication types unsupported if other is not
                 int|float
-
+        --------
         Returns:
             object: the product of a scalar times a vector
         """
@@ -135,13 +122,13 @@ class Vector2D:
 
     def __matmul__(self, other : object) -> float:
         """Definition of the vector product (self @ other), ! always generates a warning
-
-        Raises:
-            Warning: Since the vector product it's not defined in 2D raises a warning
-
+        -----
         Args:
             other (object): another Vector2D
-
+        -------
+        Raises:
+            Warning: Since the vector product it's not defined in 2D raises a warning
+        --------
         Returns:
             float: the module of the resultant vector
         """
@@ -152,13 +139,13 @@ class Vector2D:
 
     def __truediv__(self, other : int|float) -> object:
         """Definition of right division self / other
-
+        -----
         Args:
             other (int|float): number value
-
+        -------
         Raises:
             Exception: Division types unsupported if other is not int|float
-
+        --------
         Returns:
             object: the product of a vector times a scalar^(-1)
         """
@@ -169,16 +156,16 @@ class Vector2D:
 
     def __pow__(self, other : int) -> float|object:
         """Definition of the power of a vector, self**other
-
+        -----
         Args:
             other (int): the exponent
-
+        -------
         Raises:
             Exception: Power of a vector should be and integer bigger or equal
                 to 1, when other <= 0, since it's not defined
             Exception: Exponent is and unsupported type, when other is not int
                 since it's not defined
-
+        --------
         Returns:
             The scalar product of self*self other-times, it's type:
                 float: if other is even
