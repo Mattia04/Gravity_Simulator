@@ -1,11 +1,11 @@
-import json
+from json import load
 from os import path
 from typing import Tuple
 
 from .vectors2D import Vector2D
 
 with open(path.abspath("Settings.json"), "r") as f:
-    config = json.load(f)
+    config = load(f)
 dt = config["dt"]
 
 class Body:

@@ -1,6 +1,7 @@
 #Import standard library
 import math
 from functools import partial, reduce
+from json import load
 from typing import Tuple
 
 import matplotlib.pyplot as plt
@@ -61,14 +62,19 @@ def calculate_objects_accelerations(*all_objs : Tuple[Body]) -> None:
 def main():
     from utility.bodies import Bodies  # ! this is a code smell
 
-    # ! import dt in this file
+    with open("Settings.json", "r") as f:
+        config = load(f)
+    dt = config["dt"]
 
-    test_accuracy(*Bodies[::])
+    interval = 100
+    iters = 3650
+    print(f"The simulation will last {interval*iters*dt /(60*60*24*365):.3e} years")
+
+    test_accuracy(*Bodies[::], interval=interval, iterations=iters)
 
     return None
 
-def test_accuracy(*Bodies : Tuple[Body], interval : int = 1, iterations : int = 365000) -> None:
-    print(f"The simulation will last {iterations*interval*864000 /(60*60*24*365):.2e} years")
+def test_accuracy(*Bodies : Tuple[Body], interval : int = 1000, iterations : int = 1000) -> None:
 
     errors = {"mechanical_en": np.zeros(iterations + 1),
                 "kinetic_en": np.zeros(iterations + 1),
