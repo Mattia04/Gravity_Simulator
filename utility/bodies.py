@@ -1,8 +1,9 @@
-from math import cos, sin, pi
+from math import cos, pi, sin
 from typing import Tuple
 
 from .bodyclass import Body
 from .mycostants import Constants as const
+
 
 def create_position(mod : float, v_mod : float, angle : float, v_angle : float) -> Tuple[float]:
     """Generate the position and velocity of a vector

@@ -1,6 +1,7 @@
-from typing import Tuple
 import math
 import warnings
+from typing import Tuple
+
 
 class Vector2D:
     """__Vector2D__

@@ -1,10 +1,10 @@
 #Import standard library
 import math
-from typing import Tuple
 from functools import partial, reduce
+from typing import Tuple
 
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 from tqdm import tqdm
 
 from utility import *
@@ -14,8 +14,6 @@ from utility import *
 # ! The creation of new bodies is boring and tedious
 
 # ! Constants should be more
-
-# TODO figure out how to have better modules, that run even when not in the main
 
 # TODO merge bodies when they collide
 
@@ -61,13 +59,17 @@ def calculate_objects_accelerations(*all_objs : Tuple[Body]) -> None:
 
 
 def main():
-    from utility.bodies import Bodies # ! this is a code smell
+    from utility.bodies import Bodies  # ! this is a code smell
+
+    # ! import dt in this file
 
     test_accuracy(*Bodies[::])
 
     return None
 
 def test_accuracy(*Bodies : Tuple[Body], interval : int = 1, iterations : int = 365000) -> None:
+    print(f"The simulation will last {iterations*interval*864000 /(60*60*24*365):.2e} years")
+
     errors = {"mechanical_en": np.zeros(iterations + 1),
                 "kinetic_en": np.zeros(iterations + 1),
                 "potential_en": np.zeros(iterations + 1)}

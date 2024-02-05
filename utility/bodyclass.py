@@ -1,7 +1,6 @@
-from typing import Tuple
-from os import path
-
 import json
+from os import path
+from typing import Tuple
 
 from .vectors2D import Vector2D
 
