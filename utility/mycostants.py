@@ -2,11 +2,12 @@
 # TODO rewrite this file with a dataset
 # @     maybe using pands dataset for each planet
 
+
 class Constants:
-    #Gravitational constant in Nm^2kg^-2
+    # Gravitational constant in Nm^2kg^-2
     G = 6.674e-11
 
-    #Masses (in kg)
+    # Masses (in kg)
     SUN_M = 1.989e30
     EARTH_M = 5.972e24
     MERCURY_M = 0.330e24
@@ -19,7 +20,7 @@ class Constants:
     MOON_M = 0.073e24
     PLUTO_M = 0.013e24
 
-    #Distance from the Sun (in m)
+    # Distance from the Sun (in m)
     MERCURY_D = 57.9e9
     VENUS_D = 108.2e9
     EARTH_D = 149.6e9
@@ -29,10 +30,10 @@ class Constants:
     URANUS_D = 2867.0e9
     NEPTUNE_D = 4515.0e9
     PLUTO_D = 5906.4e9
-    #Distance from Earth (in m)
+    # Distance from Earth (in m)
     MOON_D = 0.384e9
 
-    #Orbital velocity around the sun (in m/s)
+    # Orbital velocity around the sun (in m/s)
     MERCURY_V = 47.4e3
     VENUS_V = 35.0e3
     EARTH_V = 29.8e3
@@ -42,5 +43,5 @@ class Constants:
     URANUS_V = 6.8e3
     NEPTUNE_V = 5.4e3
     PLUTO_V = 4.7e3
-    #Orbital velocity around the Earth (in m/s)
+    # Orbital velocity around the Earth (in m/s)
     MOON_V = 1.0e3

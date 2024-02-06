@@ -8,14 +8,21 @@ with open(path.abspath("Settings.json"), "r") as f:
     config = load(f)
 dt = config["dt"]
 
+
 class Body:
     """Body class stores the information of a celestial body and has the modules
     for the first order Euler's method for computing a physical system
     """
-    def __init__(self, name : str, mass: float,
-                 x_pos: float, y_pos: float,
-                 x_vel: float, y_vel: float
-                 ) -> None:
+
+    def __init__(
+        self,
+        name: str,
+        mass: float,
+        x_pos: float,
+        y_pos: float,
+        x_vel: float,
+        y_vel: float,
+    ) -> None:
         """Initialize the Body
 
         Args:
@@ -32,18 +39,20 @@ class Body:
         # ? I could add the object radius for a merge implementation
         # ? I could add a type variable that indicates the type of stellar object it is
 
-        self.pos = Vector2D(x_pos, y_pos) # Position vector
-        self.vel = Vector2D(x_vel, y_vel) # Velocity vector
+        self.pos = Vector2D(x_pos, y_pos)  # Position vector
+        self.vel = Vector2D(x_vel, y_vel)  # Velocity vector
 
     def __str__(self) -> str:
         """Returns:
-            str: Description of the object in cartesian coordinates with
+        str: Description of the object in cartesian coordinates with
         """
-        return f"The body {self.name}:\n"\
-            + "\tCartesian position is     "\
-                + f"({self.pos.x:.3g}m,     {self.pos.y:.3g}m).\n"\
-            + "\tCartesian velocity is     "\
-                + f"({self.vel.x:.3g}m/s,   {self.vel.y:.3g}m/s).\n"
+        return (
+            f"The body {self.name}:\n"
+            + "\tCartesian position is     "
+            + f"({self.pos.x:.3g}m,     {self.pos.y:.3g}m).\n"
+            + "\tCartesian velocity is     "
+            + f"({self.vel.x:.3g}m/s,   {self.vel.y:.3g}m/s).\n"
+        )
 
     def __repr__(self) -> str:
         return f"{self.name}, {self.pos.mod():.5g}, {self.vel.mod():.5g}"
@@ -64,7 +73,7 @@ class Body:
             return True
         return False
 
-    def accelerate(self, acceleration : Vector2D) -> None:
+    def accelerate(self, acceleration: Vector2D) -> None:
         """accelerate and move the body
 
         It uses second order euler's method to calculate an iteration

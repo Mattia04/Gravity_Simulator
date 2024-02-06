@@ -27,18 +27,21 @@ class Vector2D:
         Exception: The vector is a zero raises when trying to get the polar
             angle of a (0, 0) vector, it's not defined
     """
-    def __init__(self, x : float, y : float) -> None:
-        self.x : float = x
-        self.y : float = y
+
+    def __init__(self, x: float, y: float) -> None:
+        self.x: float = x
+        self.y: float = y
 
     def __str__(self) -> str:
-        return f"Cartesian coordinates \t(x: {self.x:+.2e},\ty: {self.y:+.2e})\n"\
-            +  f"Polar coordinates     \t(r: {self.mod():+.2e},\tɸ: {self.angle():+.2e})\n"
+        return (
+            f"Cartesian coordinates \t(x: {self.x:+.2e},\ty: {self.y:+.2e})\n"
+            + f"Polar coordinates     \t(r: {self.mod():+.2e},\tɸ: {self.angle():+.2e})\n"
+        )
 
     def __repr__(self) -> str:
         return f"{self.x} {self.y}"
 
-    def __eq__(self, other : object) -> bool:
+    def __eq__(self, other: object) -> bool:
         """Args:
             other (object): another Vector2D
         --------
@@ -49,7 +52,7 @@ class Vector2D:
             return True
         return False
 
-    def __add__(self, other : object) -> object:
+    def __add__(self, other: object) -> object:
         """Definition of additions of vectors
         -----
         Args:
@@ -68,7 +71,7 @@ class Vector2D:
         """
         return Vector2D(-self.x, -self.y)
 
-    def __sub__(self, other : object) -> object:
+    def __sub__(self, other: object) -> object:
         """Definition of subtraction of vectors
         -----
         Args:
@@ -79,7 +82,7 @@ class Vector2D:
         """
         return self + -other
 
-    def __mul__(self, other : int|float|object) -> float|object:
+    def __mul__(self, other: int | float | object) -> float | object:
         """Definition of right multiplications self * other
         -----
         Args:
@@ -98,12 +101,12 @@ class Vector2D:
         """
         if isinstance(other, Vector2D):
             return self.x * other.x + self.y * other.y
-        elif isinstance(other, int|float):
+        elif isinstance(other, int | float):
             return Vector2D(self.x * other, self.y * other)
         else:
             raise Exception("Multiplication types unsupported\n")
 
-    def __rmul__(self, other : int|float) -> object:
+    def __rmul__(self, other: int | float) -> object:
         """Definition of the right multiplication other * self
         -----
         Args:
@@ -116,12 +119,12 @@ class Vector2D:
         Returns:
             object: the product of a scalar times a vector
         """
-        if isinstance(other, int|float):
+        if isinstance(other, int | float):
             return Vector2D(self.x * other, self.y * other)
         else:
             raise Exception("Multiplication types unsupported\n")
 
-    def __matmul__(self, other : object) -> float:
+    def __matmul__(self, other: object) -> float:
         """Definition of the vector product (self @ other), ! always generates a warning
         -----
         Args:
@@ -133,12 +136,14 @@ class Vector2D:
         Returns:
             float: the module of the resultant vector
         """
-        warnings.warn("Warning: you are trying to get the vector product in 2D, "\
-            +"since it's defined only in 3D the module of the vector was "\
-            +"returned instead of the vector.\n")
-        return self.x*other.y - other.x*self.y
+        warnings.warn(
+            "Warning: you are trying to get the vector product in 2D, "
+            + "since it's defined only in 3D the module of the vector was "
+            + "returned instead of the vector.\n"
+        )
+        return self.x * other.y - other.x * self.y
 
-    def __truediv__(self, other : int|float) -> object:
+    def __truediv__(self, other: int | float) -> object:
         """Definition of right division self / other
         -----
         Args:
@@ -150,12 +155,12 @@ class Vector2D:
         Returns:
             object: the product of a vector times a scalar^(-1)
         """
-        if isinstance(other, int|float):
-            return self * (1/other)
+        if isinstance(other, int | float):
+            return self * (1 / other)
         else:
             raise Exception("Division types unsupported\n")
 
-    def __pow__(self, other : int) -> float|object:
+    def __pow__(self, other: int) -> float | object:
         """Definition of the power of a vector, self**other
         -----
         Args:
@@ -174,44 +179,46 @@ class Vector2D:
         """
         if isinstance(other, int):
             if other > 1:
-                return self * self**(other -1)
+                return self * self ** (other - 1)
             elif other == 1:
                 return self
             else:
-                raise Exception("Power of a vector should be and integer bigger or equal to 1\n")
+                raise Exception(
+                    "Power of a vector should be and integer bigger or equal to 1\n"
+                )
         else:
             raise Exception("Exponent is and unsupported type\n")
 
-    #Return the cartesian position as a tuple
+    # Return the cartesian position as a tuple
     def get_cart_coord(self) -> Tuple[float]:
         return self.x, self.y
 
-    #Return the polar position as a tuple
+    # Return the polar position as a tuple
     def get_polar_coord(self) -> Tuple[float]:
         return self.mod(), self.angle()
 
-    #Return the modulus of the vector
+    # Return the modulus of the vector
     def mod(self) -> float:
-        return (self.x**2 + self.y**2)**.5
+        return (self.x**2 + self.y**2) ** 0.5
 
-    #Return the polar angle of the vector
+    # Return the polar angle of the vector
     def angle(self) -> float:
         if self.mod() == 0:
             raise Exception("The vector is a zero\n")
         if self.x == 0:
             return 0
-        theta = math.atan(self.y/self.x)
+        theta = math.atan(self.y / self.x)
         if self.x < 0:
             theta += math.pi
         return theta
 
-    #Rotate the vector
-    def rotate(self, theta : float) -> None:
+    # Rotate the vector
+    def rotate(self, theta: float) -> None:
         mod = self.mod()
         alpha = self.angle()
         self.x = mod * math.cos(alpha + theta)
         self.y = mod * math.sin(alpha + theta)
 
 
-def Vec2D_from_polar(module : float, theta : float) -> Vector2D:
+def Vec2D_from_polar(module: float, theta: float) -> Vector2D:
     return Vector2D(module * math.cos(theta), module * math.sin(theta))
