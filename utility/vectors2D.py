@@ -48,9 +48,7 @@ class Vector2D:
         Returns:
             bool: true if other vector is the same as self vector
         """
-        if self.x == other.x and self.y == other.y:
-            return True
-        return False
+        return bool(self.x == other.x and self.y == other.y)
 
     def __add__(self, other: object) -> object:
         """Definition of additions of vectors

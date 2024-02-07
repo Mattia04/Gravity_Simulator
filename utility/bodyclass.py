@@ -69,9 +69,7 @@ class Body:
         bool
             True if self and other have the same name
         """
-        if self.name == other.name:
-            return True
-        return False
+        return bool(self.name == other.name)
 
     def accelerate(self, acceleration: Vector2D) -> None:
         """accelerate and move the body

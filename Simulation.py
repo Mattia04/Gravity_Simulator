@@ -1,5 +1,4 @@
 # Import standard library
-import math
 from functools import partial, reduce
 from json import load
 from typing import Tuple
@@ -66,7 +65,7 @@ def calculate_objects_accelerations(*all_objs: Tuple[Body, ...]) -> None:
 
 
 def main() -> None:
-    from utility.bodies import Bodies  # ! this is a code smell
+    from utility.bodies import Bodies
 
     with open("Settings.json", "r") as f:
         config = load(f)
