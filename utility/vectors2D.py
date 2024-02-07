@@ -39,7 +39,7 @@ class Vector2D:
         )
 
     def __repr__(self) -> str:
-        return f"{self.x} {self.y}"
+        return f"Vec2D({self.x:.5g}, {self.y:.5g})"
 
     def __eq__(self, other: object) -> bool:
         """Args:
