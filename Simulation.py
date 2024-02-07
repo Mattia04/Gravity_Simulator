@@ -33,27 +33,27 @@ def calc_distance(pos1: Vector2D, pos2: Vector2D) -> float:
     return (pos1 - pos2).mod()
 
 
-# Calculate the acceleration effect of oth_obj on obj
-def add_object_field(sum: Vector2D, oth_obj: Body, obj: Body) -> Vector2D:
+# Calculate the acceleration effect of oth_body on body
+def add_object_field(sum: Vector2D, oth_body: Body, body: Body) -> Vector2D:
     # ! this if to remove the error of .angle() if the vector is a zero
     # ! it should be removed after the implementation of merging
-    if oth_obj.pos == obj.pos:
+    if oth_body.pos == body.pos:
         return sum
 
     return sum + calc_gravitational_acceleration(
-        mass=oth_obj.mass, pos=obj.pos, oth_pos=oth_obj.pos
+        mass=oth_body.mass, pos=body.pos, oth_pos=oth_body.pos
     )
 
 
 # Calculate the effect of all other bodies on the singular body
-def calculate_object_acceleration(obj: Body, oth_objs: Tuple[Body]) -> Vector2D:
+def calculate_object_acceleration(body: Body, oth_bodies: Tuple[Body, ...]) -> Vector2D:
     # * setting add_object_field on to obj
-    func_add = partial(add_object_field, obj=obj)
-    return reduce(func_add, oth_objs, Vector2D(0, 0))
+    func_add = partial(add_object_field, body=body)
+    return reduce(func_add, oth_bodies, Vector2D(0, 0))
 
 
 # Calculate and set the effect of ALL objects on each other
-def calculate_objects_accelerations(*all_objs: Tuple[Body]) -> None:
+def calculate_objects_accelerations(*all_objs: Tuple[Body, ...]) -> None:
     # * calculate the acceleration for each body
     accelerations = [Vector2D(0, 0) for i in all_objs]
     for i, obj in enumerate(all_objs):
@@ -65,7 +65,7 @@ def calculate_objects_accelerations(*all_objs: Tuple[Body]) -> None:
         obj.accelerate(acc)
 
 
-def main():
+def main() -> None:
     from utility.bodies import Bodies  # ! this is a code smell
 
     with open("Settings.json", "r") as f:
@@ -74,7 +74,7 @@ def main():
 
     interval = 100
     iters = 3650
-    print(f"The simulation will last {interval*iters*dt /(60*60*24*365):.6g} years")
+    print(f"The simulation will last {interval*iters*dt /(60*60*24*365):.4g} years")
 
     test_accuracy(*Bodies[::], interval=interval, iterations=iters)
 
@@ -82,7 +82,7 @@ def main():
 
 
 def test_accuracy(
-    *Bodies: Tuple[Body], interval: int = 1000, iterations: int = 1000
+    *Bodies: Tuple[Body, ...], interval: int = 1000, iterations: int = 1000
 ) -> None:
 
     errors = {
@@ -151,21 +151,21 @@ def test_accuracy(
     plt.show()
 
 
-def energy_error(*Bodies):
+def energy_error(*Bodies: Body) -> Tuple[float, ...]:
     kinetic = get_kinetic_err(Bodies)
     potential = get_potential_err(Bodies)
     mechanical = kinetic + potential
     return mechanical, kinetic, potential
 
 
-def get_kinetic_err(Bodies):
+def get_kinetic_err(Bodies: Tuple[Body, ...]) -> float:
     kinetic = 0
     for body in Bodies:
         kinetic += 1 / 2 * body.mass * body.vel.mod() ** 2
     return kinetic
 
 
-def get_potential_err(Bodies):
+def get_potential_err(Bodies: Tuple[Body, ...]) -> float:
     potential = 0
     for body in Bodies:
         for oth_body in Bodies:

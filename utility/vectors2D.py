@@ -190,11 +190,11 @@ class Vector2D:
             raise Exception("Exponent is and unsupported type\n")
 
     # Return the cartesian position as a tuple
-    def get_cart_coord(self) -> Tuple[float]:
+    def get_cart_coord(self) -> Tuple[float, float]:
         return self.x, self.y
 
     # Return the polar position as a tuple
-    def get_polar_coord(self) -> Tuple[float]:
+    def get_polar_coord(self) -> Tuple[float, float]:
         return self.mod(), self.angle()
 
     # Return the modulus of the vector
