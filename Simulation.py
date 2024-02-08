@@ -71,11 +71,11 @@ def main() -> None:
         config = load(f)
     dt = config["dt"]
 
-    interval = 100
-    iters = 3650
+    interval = 25
+    iters = 200000
     print(f"The simulation will last {interval*iters*dt /(60*60*24*365):.4g} years")
 
-    test_accuracy(*Bodies[::], interval=interval, iterations=iters)
+    test_accuracy(*Bodies[:], interval=interval, iterations=iters)
 
     return None
 
@@ -88,6 +88,7 @@ def test_accuracy(
         "mechanical_en": np.zeros(iterations + 1),
         "kinetic_en": np.zeros(iterations + 1),
         "potential_en": np.zeros(iterations + 1),
+        "momentum": np.zeros(iterations + 1),
     }
 
     for iter in tqdm(range(iterations)):
@@ -95,6 +96,7 @@ def test_accuracy(
         errors["mechanical_en"][iter] = mec
         errors["kinetic_en"][iter] = kin
         errors["potential_en"][iter] = pot
+        errors["momentum"][iter] = momentum_error(*Bodies)
 
         for _ in range(interval):
             calculate_objects_accelerations(*Bodies)
@@ -103,6 +105,7 @@ def test_accuracy(
         errors["mechanical_en"][iterations] = mec
         errors["kinetic_en"][iterations] = kin
         errors["potential_en"][iterations] = pot
+        errors["momentum"][iterations] = momentum_error(*Bodies)
 
     x = np.arange(0, iterations + 1)
     max_mec_en = max(np.fabs(errors["mechanical_en"]))
@@ -110,7 +113,7 @@ def test_accuracy(
     errors["kinetic_en"] /= max_mec_en
     errors["potential_en"] /= max_mec_en
 
-    fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(16, 5))
+    fig, (ax1, ax2, ax3, ax4) = plt.subplots(1, 4, figsize=(16, 4))
 
     ax1.plot(x, errors["mechanical_en"])
     ax1.title.set_text("Mechanical Energy")
@@ -118,12 +121,14 @@ def test_accuracy(
     ax2.title.set_text("Kinetic Energy")
     ax3.plot(x, errors["potential_en"])
     ax3.title.set_text("Potential Energy")
+    ax4.plot(x, errors["momentum"])
+    ax4.title.set_text("Momentum")
 
     plt.suptitle("Errors in Energy")
     ax1.text(
         0.9,
         0.1,
-        f"Normalized respect to {max_mec_en:.2e}J",
+        f"Normalized to {max_mec_en:.2e}J",
         horizontalalignment="right",
         verticalalignment="center",
         transform=ax1.transAxes,
@@ -132,7 +137,7 @@ def test_accuracy(
     ax2.text(
         0.9,
         0.1,
-        f"Normalized respect to {max_mec_en:.2e}J",
+        f"Normalized to {max_mec_en:.2e}J",
         horizontalalignment="right",
         verticalalignment="center",
         transform=ax2.transAxes,
@@ -141,7 +146,7 @@ def test_accuracy(
     ax3.text(
         0.9,
         0.1,
-        f"Normalized respect to {max_mec_en:.2e}J",
+        f"Normalized to {max_mec_en:.2e}J",
         horizontalalignment="right",
         verticalalignment="center",
         transform=ax3.transAxes,
@@ -150,24 +155,24 @@ def test_accuracy(
     plt.show()
 
 
-def energy_error(*Bodies: Body) -> Tuple[float, ...]:
-    kinetic = get_kinetic_err(Bodies)
-    potential = get_potential_err(Bodies)
+def energy_error(*bodies: Body) -> Tuple[float, ...]:
+    kinetic = get_kinetic_err(bodies)
+    potential = get_potential_err(bodies)
     mechanical = kinetic + potential
     return mechanical, kinetic, potential
 
 
-def get_kinetic_err(Bodies: Tuple[Body, ...]) -> float:
+def get_kinetic_err(bodies: Tuple[Body, ...]) -> float:
     kinetic = 0
-    for body in Bodies:
+    for body in bodies:
         kinetic += 1 / 2 * body.mass * body.vel.mod() ** 2
     return kinetic
 
 
-def get_potential_err(Bodies: Tuple[Body, ...]) -> float:
+def get_potential_err(bodies: Tuple[Body, ...]) -> float:
     potential = 0
-    for body in Bodies:
-        for oth_body in Bodies:
+    for body in bodies:
+        for oth_body in bodies:
             if oth_body == body:
                 continue
 
@@ -178,6 +183,13 @@ def get_potential_err(Bodies: Tuple[Body, ...]) -> float:
                 / calc_distance(body.pos, oth_body.pos)
             )
     return potential
+
+
+def momentum_error(*bodies: Tuple[Body, ...]) -> float:
+    momentum = Vector2D(0, 0)
+    for body in bodies:
+        momentum += body.mass * body.vel
+    return momentum.mod()
 
 
 if __name__ == "__main__":
