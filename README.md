@@ -16,15 +16,19 @@ Every physical unit is from the International System.
 ## Fugure_1.png
 
 This figure shows the accuracy of the simulation given the parameters:
+
 Delta time from one iteration to another:
 ```dt = 648000```
+
 Number of iterations between two analyzed iterations
 ```interval = 25```
+
 Number of analyzed iterations
 ```iters = 200000```
+
 All the 9 Bodies contained in the file bodies.py
 
-which simulated over 100'000 years of the solar system
+Which simulated over 100'000 years of the solar system
 
 ### Settings.json
 
