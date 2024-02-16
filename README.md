@@ -11,6 +11,8 @@ Feel free to give me comments or suggestions to improve my code.
 The program, for now, uses Euler's method to describe the motions of the celestial bodies, but there is still no simulation yet, just a function to calculate the accuracy of my calculations after a set amount of steps.
 
 Two examples of simulations
+
+
 https://github.com/Mattia04/Gravity_Simulator/assets/47697461/17f82a85-eb6f-4b7b-be99-a5756c586d21
 
 
