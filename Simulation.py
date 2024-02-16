@@ -231,7 +231,7 @@ def run_simulation(*bodies: Tuple[Body, ...], dt: float) -> None:
         screen.fill(BLACK)
         calculate_objects_accelerations(*bodies)
         draw()
-        pygame.time.Clock().tick(60)
+        # pygame.time.Clock().tick(60)
 
         pygame.display.update()
 
