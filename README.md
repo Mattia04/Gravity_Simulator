@@ -11,6 +11,14 @@ Feel free to give me comments or suggestions to improve my code.
 The program, for now, uses Euler's method to describe the motions of the celestial bodies, but there is still no simulation yet, just a function to calculate the accuracy of my calculations after a set amount of steps.
 
 Note:
+
+https://github.com/Mattia04/Gravity_Simulator/assets/47697461/17f82a85-eb6f-4b7b-be99-a5756c586d21
+
+
+
+https://github.com/Mattia04/Gravity_Simulator/assets/47697461/0ec925f3-1fc1-4bd8-9f29-e40e70b35a45
+
+
 Every physical unit is from the International System.
 
 ## Fugure_1.png
