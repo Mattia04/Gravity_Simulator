@@ -78,6 +78,17 @@ body4: Body = Body(
     const.EARTH_M,
     *create_position(const.EARTH_D, const.EARTH_V, 1.5, get_perpendicular(1.5))
 )
+body41: Body = Body(
+    "Luna",
+    const.MOON_M,
+    *create_position(
+        const.EARTH_D + const.MOON_D,
+        const.EARTH_V + const.MOON_V,
+        1.5,
+        get_perpendicular(1.5),
+    )
+)
+
 body5: Body = Body(
     "Marte",
     const.MARS_M,
@@ -105,4 +116,15 @@ body9: Body = Body(
 )
 
 # * Get the list of Bodies, you can also use other lists
-Bodies: Tuple[Body] = (body1, body2, body3, body4, body5, body6, body7, body8, body9)
+Bodies: Tuple[Body] = (
+    body1,
+    body2,
+    body3,
+    body4,
+    body41,
+    body5,
+    body6,
+    body7,
+    body8,
+    body9,
+)

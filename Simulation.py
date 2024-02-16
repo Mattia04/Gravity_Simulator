@@ -1,10 +1,12 @@
 # Import standard library
+import sys
 from functools import partial, reduce
 from json import load
 from typing import Tuple
 
 import matplotlib.pyplot as plt
 import numpy as np
+import pygame
 from tqdm import tqdm
 
 from utility import *
@@ -71,11 +73,16 @@ def main() -> None:
         config = load(f)
     dt = config["dt"]
 
+    """
     interval = 25
-    iters = 200000
+    iters = 20000
     print(f"The simulation will last {interval*iters*dt /(60*60*24*365):.4g} years")
 
-    test_accuracy(*Bodies[:], interval=interval, iterations=iters)
+    test_accuracy(*Bodies, interval=interval, iterations=iters)
+    """
+
+    print(Bodies)
+    run_simulation(*Bodies, dt=dt)
 
     return None
 
@@ -190,6 +197,45 @@ def momentum_error(*bodies: Tuple[Body, ...]) -> float:
     for body in bodies:
         momentum += body.mass * body.vel
     return momentum.mod()
+
+
+def run_simulation(*bodies: Tuple[Body, ...], dt: float) -> None:
+    # Setup
+    WIDTH, HEIGHT = 800, 800
+    CENTERX, CENTERY = WIDTH // 2, HEIGHT // 2
+
+    screen = pygame.display.set_mode((WIDTH, HEIGHT))
+
+    BLACK = (0, 0, 0)
+    WHITE = (255, 255, 255)
+
+    def draw():
+        for body in bodies:
+            xpos, ypos = body.pos.get_cart_coord()
+            xpos, ypos = (
+                xpos * CENTERX / const.NEPTUNE_D + CENTERX,
+                ypos * CENTERY / const.NEPTUNE_D + CENTERY,
+            )
+            pygame.draw.circle(screen, WHITE, (xpos, ypos), 3)
+
+    doLoop = True
+    while doLoop:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                try:
+                    sys.exit()
+                finally:
+                    doLoop = False
+
+        screen.fill(BLACK)
+        calculate_objects_accelerations(*bodies)
+        draw()
+        pygame.time.Clock().tick(60)
+
+        pygame.display.update()
+
+    return None
 
 
 if __name__ == "__main__":
